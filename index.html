@@ -1,175 +1,228 @@
+<!DOCTYPE html>
 <html>
 
+
+
 <head>
+
     <meta charset="UTF-8">
-    <title>假期</title>
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-            font-size: 16px;
-        }
-
-        .box {
-            display: flex;
-            justify-content: center;
-            line-height: 40px;
-
-        }
-
-        .mytime {
-            width: 150px;
-        }
-
-        .bj {
-            background-color: #cdd79c;
-            height: 100%;
-            padding-top: 50px;
+    <title></title>
+    <style type="text/css">
+        body,
+        html {
+            overflow: hidden;
         }
     </style>
+
 </head>
 
+
+
 <body>
+    <canvas id="canvas"></canvas>
 
-    <div class="bj">
-        <table border="1px" cellpadding="10px" cellspacing="0" style="margin: auto">
-            <tr>
-                <td>节日</td>
-                <td>放假时间</td>
-                <td>天数</td>
-                <td>倒计时</td>
-            </tr>
-            <tr>
-                <td>元旦</td>
-                <td>12月31日 - 01月02日</td>
-                <td>3</td>
-                <td>
-                    <div class="mytime jsTime" data-time="2023-01-01 00:00:00">时间1</div>
-                </td>
-            </tr>
-            <tr>
-                <td>春节</td>
-                <td>01月21日 - 01月27日</td>
-                <td>7</td>
-                <td>
-                    <div class="mytime jsTime" data-time="2023-01-21 00:00:00">时间1</div>
-                </td>
-            </tr>
-            <tr>
-                <td>清明</td>
-                <td>04月05日 - 04月05日</td>
-                <td>1</td>
-                <td>
-                    <div class="mytime jsTime" data-time="2023-04-05 00:00:00">时间1</div>
-                </td>
-            </tr>
-            <tr>
-                <td>劳动</td>
-                <td>04月29日 - 05月03日</td>
-                <td>5</td>
-                <td>
-                    <div class="mytime jsTime" data-time="2023-04-29 00:00:00">时间1</div>
-                </td>
-            </tr>
-            <tr>
-                <td>端午</td>
-                <td>06月22日 - 06月24日</td>
-                <td>3</td>
-                <td>
-                    <div class="mytime jsTime" data-time="2023-06-22 00:00:00">时间1</div>
-                </td>
-            </tr>
-            <tr>
-                <td>中秋/国庆</td>
-                <td>09月29日 - 10月06日</td>
-                <td>8</td>
-                <td>
-                    <div class="mytime jsTime" data-time="2023-09-29 00:00:00">时间1</div>
-                </td>
-            </tr>
-            <tr>
-                <td>元旦</td>
-                <td>12月31日 - 01月02日</td>
-                <td>3</td>
-                <td>
-                    <div class="mytime jsTime" data-time="2024-01-01 00:00:00">时间1</div>
-                </td>
-            </tr>
-            <tr>
-                <td>春节</td>
-                <td>02月09日 - 02月15日</td>
-                <td>7</td>
-                <td>
-                    <div class="mytime jsTime" data-time="2024-02-09 00:00:00">时间1</div>
-                </td>
-            </tr>
-        </table>
-
-        <!-- <div class="box">距离元旦：<div class="mytime jsTime" data-time="2023-01-01 00:00:00">时间1</div>
-            <div>3天</div>
-        </div>
-        <div class="box">距离春节：<div class="mytime jsTime" data-time="2023-01-21 00:00:00">时间1</div>
-            <div>7天</div>
-        </div>
-        <div class="box">距离清明：<div class="mytime jsTime" data-time="2023-04-05 00:00:00">时间1</div>
-            <div>1天</div>
-        </div>
-        <div class="box">距离五一：<div class="mytime jsTime" data-time="2023-04-29 00:00:00">时间1</div>
-            <div>5天</div>
-        </div>
-        <div class="box">距离端午：<div class="mytime jsTime" data-time="2023-06-22 00:00:00">时间1</div>
-            <div>3天</div>
-        </div>
-        <div class="box">距离中秋：<div class="mytime jsTime" data-time="2023-09-29 00:00:00">时间1</div>
-            <div>8天</div>
-        </div>
-        <div class="box">距离国庆：<div class="mytime jsTime" data-time="2023-10-01 00:00:00">时间1</div>
-            <div>8天</div>
-        </div>
-        <div class="box">距离元旦：<div class="mytime jsTime" data-time="2024-01-01 00:00:00">时间1</div>
-            <div>3天</div>
-        </div>
-        <div class="box">距离春节：<div class="mytime jsTime" data-time="2024-02-09 00:00:00">时间1</div>
-            <div>7天</div>
-        </div> -->
-
-    </div>
 </body>
 
-<script>
-    const countdown = {
-        domList: document.querySelectorAll('.jsTime'),
-        formatNumber(n) {
-            // return n.toString().padStart(2, '0');  // 用padStart方法要注意兼容问题
-            n = n.toString();
-            return n[1] ? n : '0' + n;
-        },
-        setTime(dom) {
-            //获取设置的时间 如：2019-3-28 14:00:00  ios系统得加正则.replace(/\-/g, '/');
-            const leftTime = new Date(dom.getAttribute('data-time').replace(/\-/g, '/')) - new Date();
-            if (leftTime >= 0) {
-                const d = Math.floor(leftTime / 1000 / 60 / 60 / 24);
-                const h = Math.floor(leftTime / 1000 / 60 / 60 % 24);
-                const m = Math.floor(leftTime / 1000 / 60 % 60);
-                const s = Math.floor(leftTime / 1000 % 60);
-                dom.innerHTML = `剩余${d > 0 ? d + '天' : ''}${[h, m, s].map(this.formatNumber).join(':')}`;
-            } else {
-                clearInterval(dom.$timer);
-                dom.innerHTML = '已休';
-            }
-        },
-        start() {
-            this.domList.forEach((dom) => {
-                this.setTime(dom);
-                dom.$timer = setInterval(() => {
-                    this.setTime(dom);
-                }, 1e3);
-            });
+<script type="text/javascript">
+    var canvas = document.getElementById("canvas")
+    var ctx = canvas.getContext("2d")
+
+    function onResize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.onresize = onResize;
+
+    var settings = {
+        particles: {
+            length: 500, // 最大颗粒量
+            duration: 2, // 粒子持续时间(秒)
+            velocity: 100, // 粒子速度(像素/秒)
+            effect: -0.75, // play with this for a nice effect
+            size: 30, // 颗粒尺寸(像素)
         },
     };
-    countdown.start();
+    var time,
+        particleRate = settings.particles.length / settings.particles.duration;
+    class bagainPoint {
+        constructor(x, y) {
+            this.x = (typeof x !== 'undefined') ? x : 0;
+            this.y = (typeof y !== 'undefined') ? y : 0;
+        }
+        clone() {
+            return new bagainPoint(this.x, this.y)
+        }
+        length(length) {
+            if (typeof length == 'undefined')
+                return Math.sqrt(this.x * this.x + this.y * this.y);
+            this.normalize();
+            this.x *= length;
+            this.y *= length;
+            return this
+        }
+        normalize() {
+            var length = this.length();
+            this.x /= length;
+            this.y /= length;
+            return this
+        }
+    }
+    class Point {
+        constructor() {
+            this.x = new bagainPoint().x;
+            this.y = new bagainPoint().y;
+            this.velocitx = new bagainPoint().x;
+            this.velocity = new bagainPoint().y;
+            this.accelerationx = new bagainPoint().x;
+            this.accelerationy = new bagainPoint().y;
+            this.age = .1;
+        }
+        initialize(x, y, dx, dy) {
+            this.x = x;
+            this.y = y;
+            this.velocitx = dx;
+            this.velocity = dy;
+            this.accelerationx = dx * settings.particles.effect;
+            this.accelerationy = dy * settings.particles.effect;
+            this.age = 0.1;
+        }
+        draw() {
+            function ease(t) {
+                return (--t) * t * t + 1;
+            }
+            var size = image.width * ease(this.age / settings.particles.duration);
+            ctx.globalAlpha = 1 - this.age / settings.particles.duration;
+            ctx.drawImage(image, this.x - size / 2, this.y - size / 2, size, size);
+        }
+        updata(deltaTime) {
+            this.x += this.velocitx * deltaTime;
+            this.y += this.velocity * deltaTime;
+            this.velocitx += this.accelerationx * deltaTime;
+            this.velocity += this.accelerationy * deltaTime;
+            this.age += deltaTime;
+        }
+    }
+    class PointPool {
+        constructor(length) {
+            this.particles = new Array(length);
+            for (var i = 0; i < this.particles.length; i++) {
+                this.particles[i] = new Point();
+            }
+            this.firstActive = 0
+            this.firstFree = 0
+            this.duration = settings.particles.duration;
+        }
+        add(x, y, dx, dy) {
+            this.particles[this.firstFree].initialize(x, y, dx, dy);
+            // handle circular queue
+            this.firstFree++;
+            if (this.firstFree == this.particles.length) this.firstFree = 0;
+            if (this.firstActive == this.firstFree) this.firstActive++;
+            if (this.firstActive == this.particles.length) this.firstActive = 0;
+        }
+        updata(deltaTime) {
+            var i;
+
+            if (this.firstActive < this.firstFree) {
+                for (i = this.firstActive; i < this.firstFree; i++)
+                    this.particles[i].updata(deltaTime);
+            }
+            if (this.firstFree < this.firstActive) {
+                for (i = this.firstActive; i < this.particles.length; i++)
+                    this.particles[i].updata(deltaTime);
+                for (i = 0; i < this.firstFree; i++)
+                    this.particles[i].updata(deltaTime);
+            }
+
+            while (this.particles[this.firstActive].age >= this.duration && this.firstActive != this.firstFree) {
+                this.firstActive++;
+                if (this.firstActive == this.particles.length) this.firstActive = 0;
+            }
+        }
+        draw(ctx, image) {
+            if (this.firstActive < this.firstFree) {
+                for (let i = this.firstActive; i < this.firstFree; i++)
+                    this.particles[i].draw(ctx, image);
+            }
+            if (this.firstFree < this.firstActive) {
+                for (let i = this.firstActive; i < this.particles.length; i++)
+                    this.particles[i].draw(ctx, image);
+                for (let i = 0; i < this.firstFree; i++)
+                    this.particles[i].draw(ctx, image);
+            }
+        }
+    }
+    // 星星运动轨迹
+    function length(dir, length) {
+        let lx = ''
+        let ly = JSON.parse(JSON.stringify(dir))
+        lx = Math.sqrt(ly.x * ly.x + ly.y * ly.y);
+        ly.x /= lx * length
+        ly.y /= lx * length
+        return ly;
+    }
+    //星星的XY轴关系
+    function pointOnHeart(t) {
+        return new bagainPoint(
+            160 * Math.pow(Math.sin(t), 3),
+            130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
+        );
+    }
+    // 先画一个小星星
+    var image = (function () {
+        var canvas = document.createElement('canvas'),
+            context = canvas.getContext('2d');
+        canvas.width = settings.particles.size;
+        canvas.height = settings.particles.size;
+        // Helper函数来创建路径
+        function to(t) {
+            var point = pointOnHeart(t);
+            point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
+            point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
+            return point;
+        }
+        // 创建路径
+        context.beginPath();
+        var t = -Math.PI;
+        var point = to(t);
+        context.moveTo(point.x, point.y);
+        while (t < Math.PI) {
+            t += 0.01; // baby steps!
+            point = to(t);
+            context.lineTo(point.x, point.y);
+        }
+        context.closePath();
+        // 创建填充
+        context.fillStyle = '#ea80b0';
+        context.fill();
+        // 创建图片
+        var image = new Image();
+        image.src = canvas.toDataURL();
+        return image;
+    })()
+    var particles = new PointPool(settings.particles.length)
+
+    function render() {
+        requestAnimationFrame(render);
+        var newTime = new Date().getTime() / 1000,
+            deltaTime = newTime - (time || newTime);
+        time = newTime;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        var amount = particleRate * deltaTime;
+        for (var i = 0; i < amount; i++) {
+            var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+            var dir = pos.clone().length(settings.particles.velocity);
+            particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
+        }
+        particles.updata(deltaTime);
+        particles.draw();
+    }
+    window.onload = function () {
+        onResize()
+        render()
+    }
 </script>
-
-
 
 </html>
